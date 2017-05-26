@@ -7,8 +7,8 @@
     "babel-polyfill": "^6.23.0"
   },
   "scripts": {
-    "devBuild": "webpack app/index.js dist/bundle.js",
-    "prodBuild": "webpack app/index.js dist/bundle.js -p"
+    "build:dev": "webpack-dev-server --entry ./app/index.js --output-filename ./dist/bundle.js",
+    "build:prod": "webpack app/index.js dist/bundle.js -p"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/olgasaunin/js-testing#readme",
   "devDependencies": {
-    "webpack": "^2.6.1"
+    "webpack": "^2.6.1",
+    "webpack-dev-server": "^2.4.5"
   }
 }
