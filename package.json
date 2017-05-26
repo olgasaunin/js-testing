@@ -7,8 +7,8 @@
     "babel-polyfill": "^6.23.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development webpack-dev-server --config webpack.config.js --watch",
-    "build": "NODE_ENV=production webpack -p --config webpack.config.js --progress --display-error-details --color"
+    "devBuild": "webpack app/index.js dist/bundle.js",
+    "prodBuild": "webpack app/index.js dist/bundle.js -p"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/olgasaunin/js-testing/issues"
   },
-  "homepage": "https://github.com/olgasaunin/js-testing#readme"
+  "homepage": "https://github.com/olgasaunin/js-testing#readme",
+  "devDependencies": {
+    "webpack": "^2.6.1"
+  }
 }
