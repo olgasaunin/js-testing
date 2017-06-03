@@ -1,5 +1,4 @@
-import './css/main.css';
-import './css/content.css';
+import './sass/main.scss';
 
 import { helpMe } from './helper';
 

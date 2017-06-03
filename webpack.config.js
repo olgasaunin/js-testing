@@ -1,5 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const extractPlugin = new ExtractTextPlugin({
+  filename: 'main.css'
+});
 
 const UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 
@@ -24,15 +29,15 @@ module.exports = {
         ]
       },
       {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        test: /\.scss$/,
+        use: extractPlugin.extract({
+          use: ['css-loader', 'sass-loader']
+        })
       }
     ]
   },
   plugins: [
+    extractPlugin,
     UglifyJsPlugin
   ]
 };
