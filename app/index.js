@@ -1,9 +1,11 @@
-import { helphere } from './helper';
+import './css/main.css';
+import './css/content.css';
 
+import { helpMe } from './helper';
 
-function calllog() {
-  console.log("console col");
+const siteSetup = () => {
+  console.log("Set up ... in arrow function now")
 }
 
-calllog();
-helphere();
+helpMe();
+siteSetup();
