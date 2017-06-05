@@ -6,7 +6,7 @@ const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css'
 });
 
-const UglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
+const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 
 module.exports = {
   entry: './app/index.js',
@@ -31,13 +31,13 @@ module.exports = {
       {
         test: /\.scss$/,
         use: extractPlugin.extract({
-          use: ['css-loader', 'sass-loader']
+          use: ['css-loader', 'postcss-loader','sass-loader']
         })
       }
     ]
   },
   plugins: [
     extractPlugin,
-    UglifyJsPlugin
+    uglifyJsPlugin
   ]
 };

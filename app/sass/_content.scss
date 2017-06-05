@@ -5,4 +5,8 @@ $colorBlue: blue;
   margin: auto;
   padding: 50px;
   border: 1px solid $colorBlue;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
