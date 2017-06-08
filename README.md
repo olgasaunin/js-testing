@@ -1,5 +1,8 @@
-### read me file
+### steps for eslint
+install 
+* eslint package 
+* eslist-loader package
 
-_this is test_
+configure it in webpack.comfig
 
->another thing   
+

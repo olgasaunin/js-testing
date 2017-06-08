@@ -30,6 +30,9 @@ module.exports = {
             options: {
               presets: ['es2015']
             }
+          },
+          {
+            loader: 'eslint-loader'
           }
         ]
       },
@@ -37,20 +40,20 @@ module.exports = {
         test: /\.scss$/,
         use: extractPlugin.extract({
           use: [
-            {
+            { 
               loader: "css-loader",
               options: {
                 sourceMap: true
-              }
-            },
-            {
+              } 
+            }, 
+            { 
               loader: "postcss-loader",
               options: {
                 sourceMap: 'inline'
-              }
-            },
-            {
-              loader: "sass-loader",
+              } 
+            }, 
+            { 
+              loader: "sass-loader", 
               options: {
                 sourceMap: true
               }
