@@ -24,11 +24,13 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015']
+              presets: ['es2015', 'es2017'],
+              plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
             }
           },
           {
@@ -40,20 +42,20 @@ module.exports = {
         test: /\.scss$/,
         use: extractPlugin.extract({
           use: [
-            { 
+            {
               loader: "css-loader",
               options: {
                 sourceMap: true
-              } 
-            }, 
-            { 
+              }
+            },
+            {
               loader: "postcss-loader",
               options: {
                 sourceMap: 'inline'
-              } 
-            }, 
-            { 
-              loader: "sass-loader", 
+              }
+            },
+            {
+              loader: "sass-loader",
               options: {
                 sourceMap: true
               }
