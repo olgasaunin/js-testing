@@ -20,6 +20,7 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/dist'
   },
+  devtool: "cheap-module-eval-source-map",
   module: {
     rules: [
       {
