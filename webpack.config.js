@@ -69,5 +69,15 @@ module.exports = {
   plugins: [
     extractPlugin,
     uglifyJsPlugin
-  ]
+  ],
+  devServer: {
+    host: 'localhost',
+    port: 7000,
+    open: true,
+    historyApiFallback: true,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  }
 };
