@@ -1,5 +1,5 @@
 import { helpMe } from './helper';
-//import { checkAsyncResult } from './use-async';
+import { checkAsyncResult } from './use-async';
 
 const siteSetup = () => {
   console.log("Set up ... in arrow function now")
@@ -7,5 +7,5 @@ const siteSetup = () => {
 
 helpMe();
 siteSetup();
-//checkAsyncResult();
+checkAsyncResult();
 
