@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const extractPlugin = new ExtractTextPlugin({
   filename: 'main.css'
@@ -13,6 +14,10 @@ const providerPlugin = new webpack.ProvidePlugin({
 })
 
 const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
+
+const htmlWebpackPlugin = new HtmlWebpackPlugin({
+  template: 'app/index.html'
+})
 
 const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 
@@ -26,7 +31,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist'
+    //publicPath: '/dist'
   },
   devtool: "cheap-module-eval-source-map",
   module: {
@@ -78,6 +83,7 @@ module.exports = {
     extractPlugin,
     providerPlugin,
     cleanWebPackPlugin,
+    htmlWebpackPlugin,
     uglifyJsPlugin
   ],
   devServer: {
