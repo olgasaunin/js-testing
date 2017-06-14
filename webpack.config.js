@@ -16,7 +16,8 @@ const providerPlugin = new webpack.ProvidePlugin({
 const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  template: 'app/index.html'
+  //template: 'app/index.html'
+  template: 'app/index.pug'
 })
 
 const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
@@ -24,6 +25,7 @@ const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 module.exports = {
   entry: {
     index: [
+      path.resolve(__dirname, 'app/index.pug'),
       path.resolve(__dirname, 'app/index.js'),
       path.resolve(__dirname, 'app/sass/main.scss')
     ]
@@ -81,6 +83,11 @@ module.exports = {
         test: /\.html$/,
         exclude: /node_modules/,
         use: ['html-loader']
+      },
+      {
+        test: /\.pug$/,
+        exclude: /node_modules/,
+        use: [{ loader: 'html-loader' }, { loader: 'pug-html-loader' }]
       },
       {
         test: /\.(jpg|png)$/,
