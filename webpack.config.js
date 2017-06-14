@@ -17,7 +17,8 @@ const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
 
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   //template: 'app/index.html'
-  template: 'app/index.pug'
+  template: 'app/index.pug',
+  favicon: 'app/favicon.png'
 })
 
 const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
