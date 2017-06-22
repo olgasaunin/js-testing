@@ -1,6 +1,6 @@
 import 'jquery';
 
-import { helpMe } from './helper';
+import { helpMe, extraOnTheTree } from './helper';
 import { checkAsyncResult } from './use-async';
 
 const siteSetup = () => {
@@ -17,5 +17,6 @@ $(function () {
   siteSetup();
   checkAsyncResult();
   testjQuery();
+  extraOnTheTree();
 });
 

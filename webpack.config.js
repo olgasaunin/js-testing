@@ -21,7 +21,12 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
   favicon: 'app/favicon.png'
 })
 
-const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
+//const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
+
+const minifyPlugin = new webpack.LoaderOptionsPlugin({
+  minimize: true,
+  debug: false
+})
 
 module.exports = {
   entry: {
@@ -46,7 +51,10 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['es2015', 'es2017'],
+              presets:  [
+                [ 'es2015', { modules: false } ],
+                [ 'es2017' ]
+              ],
               plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
             }
           },
@@ -111,7 +119,8 @@ module.exports = {
     providerPlugin,
     cleanWebPackPlugin,
     htmlWebpackPlugin,
-    uglifyJsPlugin
+    //uglifyJsPlugin,
+    minifyPlugin
   ],
   devServer: {
     host: 'localhost',
