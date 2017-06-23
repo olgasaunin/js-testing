@@ -15,12 +15,6 @@ const providerPlugin = new webpack.ProvidePlugin({
 
 const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
 
-const htmlWebpackPlugin = new HtmlWebpackPlugin({
-  //template: 'app/index.html'
-  template: 'app/index.pug',
-  favicon: 'app/favicon.png'
-})
-
 //const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 
 const minifyPlugin = new webpack.LoaderOptionsPlugin({
@@ -31,7 +25,7 @@ const minifyPlugin = new webpack.LoaderOptionsPlugin({
 module.exports = {
   entry: {
     index: [
-      path.resolve(__dirname, 'app/index.pug'),
+      //path.resolve(__dirname, 'app/index.pug'),
       path.resolve(__dirname, 'app/index.js'),
       path.resolve(__dirname, 'app/sass/main.scss')
     ]
@@ -96,7 +90,13 @@ module.exports = {
       {
         test: /\.pug$/,
         exclude: /node_modules/,
-        use: [{ loader: 'html-loader' }, { loader: 'pug-html-loader' }]
+        use: [{ loader: 'html-loader' },
+        { loader: 'pug-html-loader',
+          options: {
+            name: '[name],[ext]'
+          }
+        }
+        ]
       },
       {
         test: /\.(jpg|png)$/,
@@ -118,8 +118,17 @@ module.exports = {
     extractPlugin,
     providerPlugin,
     cleanWebPackPlugin,
-    htmlWebpackPlugin,
     //uglifyJsPlugin,
+    new HtmlWebpackPlugin({
+      template: 'app/index.pug',
+      filename: 'index.html',
+      chunnk: ['index']
+    }),
+    new HtmlWebpackPlugin({
+      template: 'app/service.pug',
+      filename: 'service.html',
+      chunnk: ['index']
+    }),
     minifyPlugin
   ],
   devServer: {
