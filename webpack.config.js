@@ -32,7 +32,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].js',
     //publicPath: '/dist'
   },
   devtool: "cheap-module-eval-source-map",
@@ -122,12 +122,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.pug',
       filename: 'index.html',
-      chunnk: ['index']
+      chunk: ['index']
     }),
     new HtmlWebpackPlugin({
       template: 'app/service.pug',
       filename: 'service.html',
-      chunnk: ['index']
+      chunk: ['index']
     }),
     minifyPlugin
   ],
