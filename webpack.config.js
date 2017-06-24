@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const extractPlugin = new ExtractTextPlugin({
-  filename: 'main.css'
+  filename: 'main.[chunkhash].css'
 });
 
 const providerPlugin = new webpack.ProvidePlugin({
@@ -32,7 +32,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[chunkhash].js',
     //publicPath: '/dist'
   },
   devtool: "cheap-module-eval-source-map",
@@ -122,12 +122,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: 'app/index.pug',
       filename: 'index.html',
-      chunnk: ['index']
+      chunk: ['index']
     }),
     new HtmlWebpackPlugin({
       template: 'app/service.pug',
       filename: 'service.html',
-      chunnk: ['index']
+      chunk: ['index']
     }),
     minifyPlugin
   ],
