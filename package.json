@@ -4,10 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server",
-    "build-old": "webpack -p",
-    "build": "webpack",
-    "pug": "pug *.pug"
+    "start": "webpack-dev-server --env.platform=web --progress",
+    "build": "webpack -p --env.production --env.platform=default --progress"
   },
   "author": "",
   "license": "ISC",
