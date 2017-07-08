@@ -15,112 +15,118 @@ const providerPlugin = new webpack.ProvidePlugin({
 
 const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
 
-//const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
+const entryConfig = {
+  index: [
+    path.resolve(__dirname, 'app/index.js'),
+    path.resolve(__dirname, 'app/sass/main.scss')
+  ]
+}
 
-const minifyPlugin = new webpack.LoaderOptionsPlugin({
-  minimize: true,
-  debug: false
-})
+const outputConfig = {
+  path: path.resolve(__dirname, 'dist'),
+  filename: 'bundle.[chunkhash].js',
+}
+
+const jsRules = {
+  test: /\.js$/,
+  exclude: /node_modules/,
+  use: [
+    {
+      loader: 'babel-loader',
+      options: {
+        presets:  [
+          [ 'es2015', { modules: false } ],
+          [ 'es2017' ]
+        ],
+        plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
+      }
+    },
+    {
+      loader: 'eslint-loader'
+    }
+  ]
+}
+
+const sassRules = {
+  test: /\.scss$/,
+  exclude: /node_modules/,
+  use: extractPlugin.extract({
+    use: [
+      {
+        loader: "css-loader",
+        options: {
+          sourceMap: true
+        }
+      },
+      {
+        loader: "postcss-loader",
+        options: {
+          sourceMap: 'inline'
+        }
+      },
+      {
+        loader: "sass-loader",
+        options: {
+          sourceMap: true
+        }
+      }
+    ]
+  })
+}
+
+const htmlRules = {
+  test: /\.html$/,
+  exclude: /node_modules/,
+  use: ['html-loader']
+}
+
+const pugRules = {
+  test: /\.pug$/,
+  exclude: /node_modules/,
+  use: [
+    { loader: 'html-loader' },
+    { loader: 'pug-html-loader',
+      options: {
+        name: '[name],[ext]'
+      }
+    }
+  ]
+}
+
+const imageRules = {
+  test: /\.(jpg|png|ico|svg)$/,
+  exclude: /node_modules/,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        name: '[name],[ext]',
+        outputPath: 'images/',
+      }
+    }
+  ]
+}
+//const uglifyJsPlugin = new webpack.optimize.UglifyJsPlugin({ })
 
 module.exports = (env = {}) => {
   // Variables set by npm scripts in package.json
   const isProduction = env.production === true
 
+  const minifyPlugin = new webpack.LoaderOptionsPlugin({
+    minimize: (isProduction) ? true : false,
+    debug: (isProduction) ? false : true
+  })
+
   return {
-    entry: {
-      index: [
-        //path.resolve(__dirname, 'app/index.pug'),
-        path.resolve(__dirname, 'app/index.js'),
-        path.resolve(__dirname, 'app/sass/main.scss')
-      ]
-    },
-    output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: 'bundle.[chunkhash].js',
-    },
+    entry: entryConfig,
+    output: outputConfig,
 
     devtool: (() => {
-      // return (isProduction) ? 'hidden-source-map' : 'cheap-module-eval-source-map'
       return (isProduction) ? 'source-map' : 'cheap-module-eval-source-map'
     })(),
 
     module: {
-      rules: [
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                presets:  [
-                  [ 'es2015', { modules: false } ],
-                  [ 'es2017' ]
-                ],
-                plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
-              }
-            },
-            {
-              loader: 'eslint-loader'
-            }
-          ]
-        },
-        {
-          test: /\.scss$/,
-          use: extractPlugin.extract({
-            use: [
-              {
-                loader: "css-loader",
-                options: {
-                  sourceMap: true
-                }
-              },
-              {
-                loader: "postcss-loader",
-                options: {
-                  sourceMap: 'inline'
-                }
-              },
-              {
-                loader: "sass-loader",
-                options: {
-                  sourceMap: true
-                }
-              }
-            ]
-          })
-        },
-        {
-          test: /\.html$/,
-          exclude: /node_modules/,
-          use: ['html-loader']
-        },
-        {
-          test: /\.pug$/,
-          exclude: /node_modules/,
-          use: [{ loader: 'html-loader' },
-          { loader: 'pug-html-loader',
-            options: {
-              name: '[name],[ext]'
-            }
-          }
-          ]
-        },
-        {
-          test: /\.(jpg|png)$/,
-          exclude: /node_modules/,
-          use: [
-            {
-              loader: 'file-loader',
-              options: {
-                name: '[name],[ext]',
-                outputPath: 'images/',
-                // publicPath: 'images/'
-              }
-            }
-          ]
-        }
-      ]
+      rules: [jsRules, sassRules, htmlRules, pugRules, imageRules]
     },
     plugins: [
       extractPlugin,
