@@ -15,9 +15,17 @@ const providerPlugin = new webpack.ProvidePlugin({
 
 const cleanWebPackPlugin = new CleanWebpackPlugin(['dist'])
 
+const babelOptions = {
+  presets:  [
+    [ 'es2015', { modules: false } ],
+    [ 'es2017' ]
+  ],
+  plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
+}
+
 const entryConfig = {
   index: [
-    path.resolve(__dirname, 'app/index.js'),
+    path.resolve(__dirname, 'app/ts/index.ts'),
     path.resolve(__dirname, 'app/sass/main.scss')
   ]
 }
@@ -33,16 +41,24 @@ const jsRules = {
   use: [
     {
       loader: 'babel-loader',
-      options: {
-        presets:  [
-          [ 'es2015', { modules: false } ],
-          [ 'es2017' ]
-        ],
-        plugins: ['transform-runtime', 'transform-decorators-legacy', 'transform-class-properties', 'transform-object-rest-spread']
-      }
+      options: babelOptions
     },
     {
       loader: 'eslint-loader'
+    }
+  ]
+}
+
+const tsRules = {
+  test: /\.ts(x?)$/,
+  exclude: /node_modules/,
+  use: [
+    {
+      loader: 'babel-loader',
+      options: babelOptions
+    },
+    {
+      loader: 'ts-loader'
     }
   ]
 }
@@ -126,7 +142,7 @@ module.exports = (env = {}) => {
     })(),
 
     module: {
-      rules: [jsRules, sassRules, htmlRules, pugRules, imageRules]
+      rules: [ tsRules, jsRules, sassRules, htmlRules, pugRules, imageRules]
     },
     plugins: [
       extractPlugin,
