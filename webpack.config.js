@@ -24,6 +24,7 @@ const babelOptions = {
 }
 
 const entryConfig = {
+  vendor: ['jquery'],
   index: [
     path.resolve(__dirname, 'app/ts/index.ts'),
     path.resolve(__dirname, 'app/sass/main.scss')
@@ -51,7 +52,7 @@ const jsRules = {
 
 const tsRules = {
   test: /\.ts(x?)$/,
-  //exclude: /node_modules/,
+  exclude: /node_modules/,
   use: [
     {
       loader: 'babel-loader',
@@ -153,11 +154,18 @@ module.exports = (env = {}) => {
     module: {
       rules: [ tsRules, jsRules, sassRules, htmlRules, pugRules, imageRules]
     },
+
     plugins: [
       extractPlugin,
       providerPlugin,
       cleanWebPackPlugin,
       //uglifyJsPlugin,
+
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        filename: 'vendor.js'
+      }),
+
       new HtmlWebpackPlugin({
         favicon: 'app/favicon.png',
         template: 'app/index.pug',
