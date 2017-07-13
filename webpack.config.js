@@ -26,7 +26,7 @@ const babelOptions = {
 const entryConfig = {
   vendor: ['jquery'],
   index: [
-    path.resolve(__dirname, 'app/ts/index.ts'),
+    path.resolve(__dirname, 'app/index.js'),
     path.resolve(__dirname, 'app/sass/main.scss')
   ]
 }
